@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>俳句メロディーギャラリー（Google Drive 版）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      font-size: 1.8em;
+      margin-bottom: 25px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .title {
+      font-size: 1.2em;
+      margin-bottom: 8px;
+    }
+    .author {
+      color: #666;
+      font-size: 0.95em;
+      margin-bottom: 12px;
+    }
+    button {
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #222;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+      font-size: 0.85em;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎵 俳句メロディーギャラリー（Google Drive 版）</h1>
+
+  <div class="gallery" id="gallery"></div>
+
+  <footer>※クリックすると別タブで作品が再生されます。</footer>
+
+  <script>
+    // === 生徒作品リスト ===
+    const works = [
+      { author: "石原さん", title: "ふるいけや", driveId: "17FHwjXhuezH9VjPjX5gI8cV_9S61mWlx" },
+      { author: "片岡さん", title: "増税", driveId: "17FHwjXhuezH9VjPjX5gI8cV_9S61mWlx" }
+      // ★ 他の生徒を追加する場合：
+      // { author: "新井さん", title: "わたあめ", driveId: "XXXXXXXXXXXXXX" },
+    ];
+
+    // === ギャラリー生成 ===
+    const container = document.getElementById("gallery");
+    const appBase = "https://e7136940-dotcom.github.io/haikumelody6/"; // 先生のアプリURL
+
+    works.forEach(work => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const title = document.createElement("div");
+      title.className = "title";
+      title.textContent = `「${work.title}」`;
+
+      const author = document.createElement("div");
+      author.className = "author";
+      author.textContent = work.author;
+
+      const button = document.createElement("button");
+      button.textContent = "▶ 再生";
+      button.onclick = () => {
+        const url = `${appBase}?drive=${work.driveId}`;
+        window.open(url, "_blank");
+      };
+
+      card.appendChild(title);
+      card.appendChild(author);
+      card.appendChild(button);
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
